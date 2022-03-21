@@ -1,4 +1,4 @@
-DROP DATABASE `nca_users_db`;
+DROP SCHEMA IF EXISTS `nca_users_db`;
 
 CREATE SCHEMA IF NOT EXISTS `nca_users_db` DEFAULT CHARACTER SET utf8;
 
@@ -11,6 +11,6 @@ CREATE TABLE IF NOT EXISTS `nca_users_db`.`users`
     `surname`    VARCHAR(45) NULL,
     `patronymic` VARCHAR(45) NULL,
     `age`        INT         NULL,
-    `email`       VARCHAR(60) NOT NULL UNIQUE,
+    `email`      VARCHAR(60) NOT NULL UNIQUE,
     PRIMARY KEY (`id`)
 );

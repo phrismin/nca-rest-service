@@ -5,6 +5,7 @@ import com.nca.app.ncarestservice.model.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +20,6 @@ public class UserService {
     }
 
     public User findById(Integer id) {
-        // TODO catch somewhereException
         return userRepository.findById(id)
                 .orElseThrow(() ->
                         new IllegalArgumentException("User with this id isn't exist: " + id));
@@ -27,30 +27,32 @@ public class UserService {
 
     public List<User> findAll() {
         List<User> usersList = (List<User>) userRepository.findAll();
+
         if (usersList.isEmpty()) {
-            // TODO catch somewhereException
             throw new IllegalStateException("List is empty");
         }
+
         return usersList;
     }
 
     public User saveUser(User user) {
         Optional<User> userOptional = userRepository.findUserByEmail(user.getEmail());
+
         if (userOptional.isPresent()) {
-            throw new IllegalStateException("Email taken: " + userOptional.get().getEmail());
+            throw new IllegalStateException("Email is busy: " + userOptional.get().getEmail());
         }
+
         return userRepository.save(user);
     }
 
-    public User updateUser(User newUser, Integer id) throws RuntimeException {
+    public User updateUser(User newUser, Integer id) {
         Optional<User> userOptional = userRepository.findUserByEmail(newUser.getEmail());
 
         if (userOptional.isPresent()) {
-            throw new IllegalStateException("Email taken: " + userOptional.get().getEmail());
+            throw new IllegalStateException("Email is busy: " + userOptional.get().getEmail());
         }
 
         User user = findById(id);
-
         user.setName(newUser.getName());
         user.setSurname(newUser.getSurname());
         user.setPatronymic(newUser.getPatronymic());
