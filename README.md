@@ -22,14 +22,14 @@ server.error.include-message=always - include exception messages in JSON
 ##REST requests:
 
 ```sh
-GET: localhost:8080/api/v1/users/ - get all customers.
-GET: localhost:8080/api/v1/customers/1 - get customer with ID 1.
+GET: localhost:9966/api/v1/users/ - get all customers.
+GET: localhost:9966/api/v1/customers/1 - get customer with ID 1.
 
-POST: localhost:8080/api/v1/customers/ - save new user.
+POST: localhost:9966/api/v1/customers/ - save new user.
 Request body: 
 { "name": "Alex", "surname": "Maslaev", "patronymic": "Vasilevich", "age": "55",  "email": "alexvasylevich@gmail.com" }
 
-PUT: localhost:8080/api/v1/customers/1 - change user by ID 1.
+PUT: localhost:9966/api/v1/customers/1 - change user by ID 1.
 Request body: 
 { "name": "Alex", "surname": "Maslaev", "patronymic": "Vasilevich", "age": "41",  "email": "anotherEmail@gmail.com" }
 
