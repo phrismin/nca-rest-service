@@ -1,6 +1,6 @@
 package com.nca.app.ncarestservice.rest;
 
-import com.nca.app.ncarestservice.entity.User;
+import com.nca.app.ncarestservice.model.User;
 import com.nca.app.ncarestservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,6 +8,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:8080")
@@ -40,7 +42,7 @@ public class UserController {
             value = "{id}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> read(@PathVariable Integer id) {
+    public ResponseEntity<User> read(@Min(0) @PathVariable Integer id) {
         if (id == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -54,20 +56,20 @@ public class UserController {
     @RequestMapping(
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> create(@RequestBody User user) {
+    public ResponseEntity<User> create(@Valid @RequestBody User user) {
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         User saveUser = userService.saveUser(user);
-        return new ResponseEntity<>(saveUser, HttpStatus.OK);
+        return new ResponseEntity<>(saveUser, HttpStatus.CREATED);
     }
 
     @RequestMapping(
             value = "{id}",
             method = RequestMethod.PUT,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> update(@RequestBody User user,
-                                       @PathVariable("id") Integer id) {
+    public ResponseEntity<User> update(@Valid @RequestBody User user,
+                                       @Min(0) @PathVariable("id") Integer id) {
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -79,7 +81,7 @@ public class UserController {
             value = "{id}",
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> delete(@PathVariable("id") Integer id) {
+    public ResponseEntity<User> delete(@Min(0) @PathVariable("id") Integer id) {
         if (id == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

@@ -1,11 +1,10 @@
 package com.nca.app.ncarestservice.service;
 
-import com.nca.app.ncarestservice.entity.User;
-import com.nca.app.ncarestservice.model.UserRepository;
+import com.nca.app.ncarestservice.model.User;
+import com.nca.app.ncarestservice.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,20 +45,17 @@ public class UserService {
     }
 
     public User updateUser(User newUser, Integer id) {
-        Optional<User> userOptional = userRepository.findUserByEmail(newUser.getEmail());
-
-        if (userOptional.isPresent()) {
-            throw new IllegalStateException("Email is busy: " + userOptional.get().getEmail());
-        }
-
         User user = findById(id);
         user.setName(newUser.getName());
         user.setSurname(newUser.getSurname());
         user.setPatronymic(newUser.getPatronymic());
         user.setAge(newUser.getAge());
-        user.setEmail(newUser.getEmail());
 
-        return userRepository.save(newUser);
+        if (!newUser.getEmail().equals(user.getEmail())) {
+            user.setEmail(newUser.getEmail());
+        }
+
+        return userRepository.save(user);
     }
 
     public void deleteById(Integer id) {

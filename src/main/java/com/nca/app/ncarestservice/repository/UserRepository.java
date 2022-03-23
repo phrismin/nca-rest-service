@@ -1,7 +1,6 @@
-package com.nca.app.ncarestservice.model;
+package com.nca.app.ncarestservice.repository;
 
-import com.nca.app.ncarestservice.entity.User;
-import org.springframework.data.jpa.repository.Query;
+import com.nca.app.ncarestservice.model.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
